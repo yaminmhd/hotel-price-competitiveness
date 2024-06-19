@@ -2,10 +2,11 @@ import { render, screen } from "@testing-library/react";
 import App from "./App";
 
 describe("<App/>", () => {
-  it("renders learn react title", () => {
+  it("should render title", () => {
     render(<App />);
 
-    screen.debug();
-    expect(screen.getByText("Vite + React")).toBeInTheDocument();
+    expect(
+      screen.getByText("Hotel Currencies & Price Competitiveness")
+    ).toBeInTheDocument();
   });
 });

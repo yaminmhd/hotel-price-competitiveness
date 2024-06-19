@@ -47,7 +47,7 @@ npm run test:cov
     - [x] axios, react-query
     - [x] tailwindcss
 - [x] Setup vitest
-- [ ] Setup react query and tailwindcss
+- [x] Setup react query and tailwindcss
 - [ ] Create API service
   - [ ] fetching hotels
   - [ ] fetching prices
