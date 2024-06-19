@@ -48,15 +48,17 @@ npm run test:cov
     - [x] tailwindcss
 - [x] Setup vitest
 - [x] Setup react query and tailwindcss
+- [x] Render data onto screen
+  - [x] HotelListing
+  - [x] HotelCard
 - [ ] Create API service
+  - [ ] define types for data contract
   - [ ] fetching hotels
   - [ ] fetching prices
   - [ ] read base url info from environment
-- [ ] Render data onto screen
-  - [ ] HotelList
-  - [ ] HotelDetails
 - [ ] Styling cleanup
 - [ ] Error handling
+- [ ] Setup test coverage
 
 ---
 
