@@ -3,7 +3,7 @@ import axios from "axios";
 import HotelCard, { Hotel } from "../components/HotelCard";
 
 export default function HotelListing() {
-  const { isPending, error, data } = useQuery<Hotel[]>({
+  const { isPending, isError, data, error } = useQuery<Hotel[]>({
     queryKey: ["hotels"],
     queryFn: () =>
       axios
@@ -16,7 +16,7 @@ export default function HotelListing() {
 
   if (isPending) return <h2 className="text-2xl font-bold">Loading...</h2>;
 
-  if (error) return <div>Error: {error.message}</div>;
+  if (isError) return <h2 className="text-2xl font-bold">{error.message}</h2>;
 
   return (
     <>

@@ -28,4 +28,16 @@ describe("<HotelListing/>", () => {
     render(<HotelListing />);
     expect(screen.getByText("Loading...")).toBeInTheDocument();
   });
+
+  it("should render error state", () => {
+    mockHotelListingQuery.mockReturnValue({
+      isError: true,
+      error: {
+        message: "Something went wrong",
+      },
+    } as UseQueryResult<Hotel[]>);
+
+    render(<HotelListing />);
+    expect(screen.getByText("Something went wrong")).toBeInTheDocument();
+  });
 });
