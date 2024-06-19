@@ -10,9 +10,9 @@ export type Hotel = {
   description: string;
 };
 
-export function fetchHotels(): Promise<Hotel[]> {
+export function fetchHotels(city: string): Promise<Hotel[]> {
   return axios
-    .get(`${import.meta.env.VITE_HOTEL_BASE_URL}/tokyo`)
+    .get(`${import.meta.env.VITE_HOTEL_BASE_URL}${city}`)
     .then((res) => res.data)
     .catch((error) => {
       console.log(error);
@@ -27,9 +27,13 @@ export type Price = {
   };
 };
 
-export function fetchPrices(id: number, currency: string): Promise<Price[]> {
+export function fetchPrices(
+  id: number,
+  city: string,
+  currency: string
+): Promise<Price[]> {
   return axios
-    .get(`${import.meta.env.VITE_HOTEL_BASE_URL}/tokyo/${id}/${currency}`)
+    .get(`${import.meta.env.VITE_HOTEL_BASE_URL}/${city}/${id}/${currency}`)
     .then((res) => res.data)
     .catch((error) => {
       console.log(error);

@@ -1,4 +1,4 @@
-import { Hotel } from "../../components/HotelCard";
+import { Hotel } from "../../../../api";
 
 export const mockHotelListData: Hotel[] = [
   {
