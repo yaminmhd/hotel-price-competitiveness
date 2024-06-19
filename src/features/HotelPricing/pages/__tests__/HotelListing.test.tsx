@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import HotelListing from "../HotelListing";
-import { Hotel } from "../../components/HotelCard";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import { mockHotelListData } from "./mockData";
+import { Hotel } from "../../../../api";
 
 vi.mock("@tanstack/react-query");
 const mockHotelListingQuery = vi.mocked(useQuery<Hotel[]>);

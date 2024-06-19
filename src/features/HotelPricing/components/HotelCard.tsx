@@ -1,12 +1,5 @@
-export type Hotel = {
-  id: number;
-  name: string;
-  rating: number;
-  stars: number;
-  address: string;
-  photo: string;
-  description: string;
-};
+import { Hotel } from "../../../api";
+
 export type HotelCardProps = Omit<Hotel, "id">;
 
 export default function HotelCard({

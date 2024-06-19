@@ -51,11 +51,12 @@ npm run test:cov
 - [x] Render data onto screen
   - [x] HotelListing
   - [x] HotelCard
-- [ ] Create API service
-  - [ ] define types for data contract
-  - [ ] fetching hotels
-  - [ ] fetching prices
-  - [ ] read base url info from environment
+- [x] Create API service
+  - [x] define types for data contract
+  - [x] fetching hotels
+  - [x] fetching prices
+  - [x] read base url info from environment
+- [ ] Render currencies onto screen
 - [ ] Styling cleanup
 - [ ] Error handling
 - [ ] Setup test coverage
