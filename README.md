@@ -40,12 +40,13 @@ npm run test:cov
 
 ## Dev Task List
 
-- [ ] Setup initial repo
+- [x] Setup initial repo
   - [x] update readme documentation
-  - [ ] install dependencies
-    - [ ] testing libraries vitest, react-testing-library
-    - [ ] server state data fetching library react-query
-    - [ ] styling tailwindcss
+  - [x] install dependencies
+    - [x] vitest, react-testing-library
+    - [x] axios, react-query
+    - [x] tailwindcss
+- [x] Setup vitest
 - [ ] Setup react query and tailwindcss
 - [ ] Create API service
   - [ ] fetching hotels
