@@ -33,7 +33,7 @@ export type Price = {
 
 export function fetchPrices(city: string, currency: string): Promise<Price[]> {
   return axios
-    .get(`${import.meta.env.VITE_HOTEL_BASE_URL}/${city}/1/${currency}`)
+    .get(`${import.meta.env.VITE_HOTEL_BASE_URL}${city}/1/${currency}`)
     .then((res) => res.data)
     .catch((error) => {
       console.log(error);

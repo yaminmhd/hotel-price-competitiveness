@@ -57,13 +57,15 @@ npm run test:cov
   - [x] fetching prices
   - [x] read base url info from environment
 - [x] Render currencies onto screen
-- [ ] Network mocking with msw
+- [x] Network mocking with msw
 - [ ] Implement currency switching functionality
   - [x] add localstorage for currency refresh
   - [ ] round off currencies for display
+  - [ ] refactor to uselocalstorage hook
 - [ ] Implement competitor pricing functionality
 - [ ] Implement taxes & fees functionality
 - [ ] Setup test coverage
+- [ ] Enhance error handling
 
 ---
 

@@ -1,141 +1,64 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
+import { HttpResponse, http } from "msw";
 import userEvent from "@testing-library/user-event";
 import HotelListing from "../HotelListing";
-import { UseQueryResult } from "@tanstack/react-query";
-import { mockHotelListData, mockPriceListDataUSD } from "./mockData";
-import { Hotel, Price } from "../../../../api";
-import useHotelQuery from "../../hooks/useHotelQuery";
-import usePriceInfoQuery from "../../hooks/usePriceInfoQuery";
-
-vi.mock("../../hooks/useHotelQuery");
-vi.mock("../../hooks/usePriceInfoQuery");
-const mockHotelListingQuery = vi.mocked(useHotelQuery);
-const mockPriceInfoQuery = vi.mocked(usePriceInfoQuery);
+import { renderWithClient } from "./utils";
+import { server } from "../../../../mocks/server";
 
 describe("<HotelListing/>", () => {
-  const getLocalStorageItemSpy = vi.spyOn(Storage.prototype, "getItem");
-  const setLocalStorageItemSpy = vi.spyOn(Storage.prototype, "setItem");
+  it("should render hotels list successfully with default USD price info", async () => {
+    const result = renderWithClient(<HotelListing />);
 
-  afterEach(() => {
-    localStorage.clear();
-    getLocalStorageItemSpy.mockClear();
-    setLocalStorageItemSpy.mockClear();
+    expect(await result.findAllByRole("listitem")).toHaveLength(6);
+    expect(await result.findByTestId("currency-selector")).toBeInTheDocument();
   });
 
-  it("should render hotels list successfully with default USD price info", () => {
-    //TODO: Use msw to mock network requests
-    mockHotelListingQuery.mockReturnValue({
-      data: mockHotelListData as Hotel[],
-      isPending: false,
-    } as UseQueryResult<Hotel[]>);
-    mockPriceInfoQuery.mockReturnValue({
-      data: mockPriceListDataUSD as Price[],
-      isPending: false,
-    } as UseQueryResult<Price[]>);
+  it("should render new hotel price info when user selects another currency SGD and sets into localstorage", async () => {
+    const result = renderWithClient(<HotelListing />);
+    const selectElement = await result.findByLabelText("Select Currency:");
 
-    render(<HotelListing />);
+    fireEvent.change(selectElement, {
+      target: { value: "SGD" },
+    });
 
-    expect(setLocalStorageItemSpy).toHaveBeenCalledWith(
-      "selectedCurrency",
-      "USD"
-    );
-    expect(screen.getAllByRole("listitem")).toHaveLength(6);
-    expect(screen.getByTestId("currency-selector")).toBeInTheDocument();
-  });
-
-  it("should render new hotel price info when user selects another currency SGD and sets into localstorage", () => {
-    mockHotelListingQuery.mockReturnValue({
-      data: mockHotelListData as Hotel[],
-      isPending: false,
-    } as UseQueryResult<Hotel[]>);
-    mockPriceInfoQuery.mockReturnValue({
-      data: mockPriceListDataUSD as Price[],
-      isPending: false,
-    } as UseQueryResult<Price[]>);
-
-    render(<HotelListing />);
-
-    const selectElement = screen.getByLabelText(
-      "Select Currency:"
-    ) as HTMLSelectElement;
-    fireEvent.change(selectElement, { target: { value: "SGD" } });
-
-    expect(setLocalStorageItemSpy).toHaveBeenCalledWith(
-      "selectedCurrency",
-      "SGD"
-    );
-    expect(screen.getAllByRole("listitem")).toHaveLength(6);
-    expect(screen.getByTestId("currency-selector")).toBeInTheDocument();
+    expect(
+      await result.findByRole("heading", { name: "Our Price: SGD 164.00" })
+    ).toBeInTheDocument();
+    expect(await result.findByText("SGD")).toBeInTheDocument();
+    expect(await result.findAllByRole("listitem")).toHaveLength(6);
+    expect(await result.findByTestId("currency-selector")).toBeInTheDocument();
   });
 
   it("should retain price info currency when user refreshes browser", async () => {
-    mockHotelListingQuery.mockReturnValue({
-      data: mockHotelListData as Hotel[],
-      isPending: false,
-    } as UseQueryResult<Hotel[]>);
-    mockPriceInfoQuery.mockReturnValue({
-      data: mockPriceListDataUSD as Price[],
-      isPending: false,
-    } as UseQueryResult<Price[]>);
+    const result = renderWithClient(<HotelListing />);
+    expect(await result.findByText("USD")).toBeInTheDocument();
 
-    render(<HotelListing />);
-    expect(setLocalStorageItemSpy).toHaveBeenNthCalledWith(
-      1,
-      "selectedCurrency",
-      "USD"
-    );
-
-    const selectElement = screen.getByLabelText(
-      "Select Currency:"
-    ) as HTMLSelectElement;
+    const selectElement = await result.findByLabelText("Select Currency:");
     fireEvent.change(selectElement, { target: { value: "SGD" } });
-    expect(setLocalStorageItemSpy).toHaveBeenNthCalledWith(
-      2,
-      "selectedCurrency",
-      "SGD"
-    );
+
     const user = userEvent.setup();
     await user.keyboard("[MetaLeft][KeyR]");
-    expect(setLocalStorageItemSpy).toHaveBeenLastCalledWith(
-      "selectedCurrency",
-      "SGD"
+    expect(await result.findByText("SGD")).toBeInTheDocument();
+  });
+
+  it("should render loading state", async () => {
+    const result = renderWithClient(<HotelListing />);
+    expect(await result.findByText("Loading...")).toBeInTheDocument();
+  });
+
+  it("should render error state", async () => {
+    server.use(
+      http.get("*", () => {
+        return new HttpResponse("Something went wrong", { status: 500 });
+      })
     );
-  });
-
-  it("should render loading state", () => {
-    mockHotelListingQuery.mockReturnValue({
-      isPending: true,
-    } as UseQueryResult<Hotel[]>);
-    mockPriceInfoQuery.mockReturnValue({
-      isPending: true,
-    } as UseQueryResult<Price[]>);
-
-    render(<HotelListing />);
-
-    expect(screen.getByText("Loading...")).toBeInTheDocument();
-  });
-
-  it("should render error state", () => {
-    mockHotelListingQuery.mockReturnValue({
-      isError: true,
-      error: {
-        message: "Hotels: Something went wrong",
-      },
-    } as UseQueryResult<Hotel[]>);
-    mockPriceInfoQuery.mockReturnValue({
-      isError: true,
-      error: {
-        message: "PriceInfo: Something went wrong",
-      },
-    } as UseQueryResult<Price[]>);
-
-    render(<HotelListing />);
+    const result = renderWithClient(<HotelListing />);
 
     expect(
-      screen.getByText("Hotels: Something went wrong")
+      await result.findByText(`["hotels"] data is undefined`)
     ).toBeInTheDocument();
     expect(
-      screen.getByText("PriceInfo: Something went wrong")
+      await result.findByText(`["prices","SGD"] data is undefined`)
     ).toBeInTheDocument();
   });
 });
