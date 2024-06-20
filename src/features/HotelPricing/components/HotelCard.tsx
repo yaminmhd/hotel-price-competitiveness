@@ -11,23 +11,60 @@ export default function HotelCard({
   rating,
   price,
   currency,
+  competitors,
 }: HotelCardProps) {
-  const renderPriceInCurrencyFormat = () => {
-    let roundedPrice;
+  const getCompetitorPriceList = () => {
+    if (!competitors || !price) return null;
+    const allCompetitons = { ...competitors, ["Our Price"]: price };
 
+    const sortedCompetitors = Object.fromEntries(
+      Object.entries(allCompetitons).sort(([, a], [, b]) => a - b)
+    );
+
+    const competitivePriceListing = Object.entries(sortedCompetitors).map(
+      ([competitor, price]) => {
+        const priceRounding = calculatePriceRounding(currency, price);
+        return (
+          <span
+            key={competitor}
+            className="text-sm text-gray-500 last:line-through"
+          >
+            {competitor}: {currency} {priceRounding}
+          </span>
+        );
+      }
+    );
+    return (
+      <div
+        data-testid="competitor-price-listing"
+        className="mt-2 flex flex-col items-start"
+      >
+        <span className="text-lg text-gray-700 underline">
+          Competitive Price Listing
+        </span>
+        {competitivePriceListing}
+      </div>
+    );
+  };
+
+  const calculatePriceRounding = (currency: string, price: number) => {
+    if (currency === "USD" || currency === "SGD" || currency === "CNY") {
+      return Math.round(price / 10) * 10;
+    } else {
+      return (Math.round(price / 100) * 100).toLocaleString();
+    }
+  };
+
+  const renderPriceInCurrencyFormat = () => {
     if (price === undefined) {
       return <span role="heading">Rates unavailable</span>;
     }
 
-    if (currency === "USD" || currency === "SGD" || currency === "CNY") {
-      roundedPrice = Math.round(price / 10) * 10;
-    } else {
-      roundedPrice = (Math.round(price / 100) * 100).toLocaleString();
-    }
+    const roundedPrice = calculatePriceRounding(currency, price);
 
     return (
       <span role="heading">
-        Our Price: {currency} {roundedPrice}
+        Price: {currency} {roundedPrice}
       </span>
     );
   };
@@ -53,6 +90,7 @@ export default function HotelCard({
             <span className="text-gray-500 font-extrabold">{rating} / 10</span>
           </div>
           <div>{renderPriceInCurrencyFormat()}</div>
+          <div>{getCompetitorPriceList()}</div>
         </div>
       </div>
     </div>

@@ -63,6 +63,8 @@ npm run test:cov
   - [x] round off currencies for display
   - [ ] push "Rates unavailable" result to bottom of list
 - [ ] Implement competitor pricing functionality
+  - [x] competitive pricing listing
+  - [ ] display savings
 - [ ] Implement taxes & fees functionality
 - [ ] Setup test coverage
 - [ ] Enhance error handling

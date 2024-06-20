@@ -23,7 +23,7 @@ describe("<HotelCard/>", () => {
     expect(screen.getByText("⭐⭐⭐⭐⭐")).toBeInTheDocument();
 
     expect(
-      screen.getByRole("heading", { name: "Our Price: USD 100" })
+      screen.getByRole("heading", { name: "Price: USD 100" })
     ).toBeInTheDocument();
   });
 
@@ -49,9 +49,59 @@ describe("<HotelCard/>", () => {
 
       expect(
         screen.getByRole("heading", {
-          name: `Our Price: ${currency} ${expected}`,
+          name: `Price: ${currency} ${expected}`,
         })
       ).toBeInTheDocument();
     }
   );
+
+  it("should not render competitive price listing when competitors or price is not available", () => {
+    const props: HotelCardProps = {
+      ...baseProps,
+      competitors: undefined,
+      price: undefined,
+    };
+
+    render(<HotelCard {...props} />);
+
+    expect(
+      screen.queryByTestId("competitor-price-listing")
+    ).not.toBeInTheDocument();
+  });
+
+  it("should render competitive price listing in a sorted manner from cheapest to expensive", () => {
+    const props: HotelCardProps = {
+      ...baseProps,
+      competitors: {
+        "Competitor 1": 80,
+        "Competitor 2": 92,
+        "Competitor 3": 105,
+      },
+    };
+
+    render(<HotelCard {...props} />);
+
+    expect(screen.getByText("Competitive Price Listing")).toBeInTheDocument();
+    expect(screen.getByText("Competitor 1: USD 80")).toBeInTheDocument();
+    expect(screen.getByText("Competitor 2: USD 90")).toBeInTheDocument();
+    expect(screen.getByText("Our Price: USD 100")).toBeInTheDocument();
+    expect(screen.getByText("Competitor 3: USD 110")).toBeInTheDocument();
+  });
+
+  it("should render expensive competitive price with a strikethrough", () => {
+    const props: HotelCardProps = {
+      ...baseProps,
+      competitors: {
+        "Competitor 1": 80,
+        "Competitor 2": 92,
+        "Competitor 3": 105,
+      },
+    };
+
+    render(<HotelCard {...props} />);
+
+    expect(screen.getByText("Competitor 3: USD 110")).toHaveClass(
+      "last:line-through"
+    );
+  });
 });
