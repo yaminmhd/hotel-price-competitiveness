@@ -59,6 +59,8 @@ npm run test:cov
 - [x] Render currencies onto screen
 - [ ] Network mocking with msw
 - [ ] Implement currency switching functionality
+  - [x] add localstorage for currency refresh
+  - [ ] round off currencies for display
 - [ ] Implement competitor pricing functionality
 - [ ] Implement taxes & fees functionality
 - [ ] Setup test coverage

@@ -1,11 +1,16 @@
 import HotelCard from "../components/HotelCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CurrencySelector from "../components/CurrencySelector";
 import useHotelQuery from "../hooks/useHotelQuery";
 import usePriceInfoQuery from "../hooks/usePriceInfoQuery";
+import { LOCAL_STORAGE_KEY } from "../constants";
 
 export default function HotelListing() {
-  const [currency, setCurrency] = useState<string>("USD");
+  const getInitialCurrency = () => {
+    const savedCurrency = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return savedCurrency ? savedCurrency : "USD";
+  };
+  const [currency, setCurrency] = useState<string>(getInitialCurrency());
 
   const {
     data: hotelsData,
@@ -20,6 +25,10 @@ export default function HotelListing() {
     isError: pricesIsError,
     error: pricesError,
   } = usePriceInfoQuery(currency);
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, currency);
+  }, [currency]);
 
   const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrency(e.target.value);
