@@ -12,6 +12,26 @@ export default function HotelCard({
   price,
   currency,
 }: HotelCardProps) {
+  const renderPriceInCurrencyFormat = () => {
+    let roundedPrice;
+
+    if (price === undefined) {
+      return <span role="heading">Rates unavailable</span>;
+    }
+
+    if (currency === "USD" || currency === "SGD" || currency === "CNY") {
+      roundedPrice = Math.round(price / 10) * 10;
+    } else {
+      roundedPrice = (Math.round(price / 100) * 100).toLocaleString();
+    }
+
+    return (
+      <span role="heading">
+        Our Price: {currency} {roundedPrice}
+      </span>
+    );
+  };
+
   return (
     <div
       role="listitem"
@@ -32,15 +52,7 @@ export default function HotelCard({
           <div className="flex justify-center mt-2">
             <span className="text-gray-500 font-extrabold">{rating} / 10</span>
           </div>
-          <div>
-            {price ? (
-              <span role="heading">
-                Our Price: {currency} {price.toFixed(2)}
-              </span>
-            ) : (
-              <span>Rates unavailable</span>
-            )}
-          </div>
+          <div>{renderPriceInCurrencyFormat()}</div>
         </div>
       </div>
     </div>

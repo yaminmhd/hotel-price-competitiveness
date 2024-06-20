@@ -22,7 +22,7 @@ describe("<HotelListing/>", () => {
     });
 
     expect(
-      await result.findByRole("heading", { name: "Our Price: SGD 164.00" })
+      await result.findByRole("heading", { name: "Our Price: SGD 160" })
     ).toBeInTheDocument();
     expect(await result.findByText("SGD")).toBeInTheDocument();
     expect(await result.findAllByRole("listitem")).toHaveLength(6);

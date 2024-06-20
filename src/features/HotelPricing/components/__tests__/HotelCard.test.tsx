@@ -23,7 +23,7 @@ describe("<HotelCard/>", () => {
     expect(screen.getByText("⭐⭐⭐⭐⭐")).toBeInTheDocument();
 
     expect(
-      screen.getByRole("heading", { name: "Our Price: USD 100.00" })
+      screen.getByRole("heading", { name: "Our Price: USD 100" })
     ).toBeInTheDocument();
   });
 
@@ -34,4 +34,24 @@ describe("<HotelCard/>", () => {
 
     expect(screen.getByText("Rates unavailable")).toBeInTheDocument();
   });
+
+  it.each([
+    { price: 841.0, currency: "USD", expected: "840" },
+    { price: 979.74, currency: "SGD", expected: "980" },
+    { price: 5788.43, currency: "CNY", expected: "5790" },
+    { price: 942163.89, currency: "KRW", expected: "942,200" },
+  ])(
+    `should render $price in $currency format as $expected`,
+    ({ price, currency, expected }) => {
+      const props: HotelCardProps = { ...baseProps, price, currency };
+
+      render(<HotelCard {...props} />);
+
+      expect(
+        screen.getByRole("heading", {
+          name: `Our Price: ${currency} ${expected}`,
+        })
+      ).toBeInTheDocument();
+    }
+  );
 });
