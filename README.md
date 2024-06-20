@@ -56,9 +56,11 @@ npm run test:cov
   - [x] fetching hotels
   - [x] fetching prices
   - [x] read base url info from environment
-- [ ] Render currencies onto screen
-- [ ] Styling cleanup
-- [ ] Error handling
+- [x] Render currencies onto screen
+- [ ] Network mocking with msw
+- [ ] Implement currency switching functionality
+- [ ] Implement competitor pricing functionality
+- [ ] Implement taxes & fees functionality
 - [ ] Setup test coverage
 
 ---

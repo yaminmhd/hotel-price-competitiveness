@@ -1,6 +1,7 @@
-import { Hotel } from "../../../api";
+import { Hotel, Price } from "../../../api";
 
-export type HotelCardProps = Omit<Hotel, "id">;
+export type HotelCardProps = Omit<Price, "id"> &
+  Omit<Hotel, "id"> & { currency: string };
 
 export default function HotelCard({
   photo,
@@ -8,10 +9,12 @@ export default function HotelCard({
   stars,
   address,
   rating,
+  price,
+  currency,
 }: HotelCardProps) {
   return (
     <div
-      data-testid="hotel-card"
+      role="listitem"
       className="border border-gray-400 rounded-lg shadow-lg p-4 mb-4 flex"
     >
       <img
@@ -28,6 +31,15 @@ export default function HotelCard({
           <p className="text-gray-600 font-semibold">{address}</p>
           <div className="flex justify-center mt-2">
             <span className="text-gray-500 font-extrabold">{rating} / 10</span>
+          </div>
+          <div>
+            {price ? (
+              <span role="heading">
+                Our Price: {currency} {price.toFixed(2)}
+              </span>
+            ) : (
+              <span>Rates unavailable</span>
+            )}
           </div>
         </div>
       </div>

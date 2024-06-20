@@ -21,19 +21,19 @@ export function fetchHotels(city: string): Promise<Hotel[]> {
 
 export type Price = {
   id: number;
-  price: number;
-  competitors: {
+  price?: number;
+  competitors?: {
     [key: string]: number;
+  };
+  taxes_and_fees?: {
+    tax: number;
+    hotel_fees: number;
   };
 };
 
-export function fetchPrices(
-  id: number,
-  city: string,
-  currency: string
-): Promise<Price[]> {
+export function fetchPrices(city: string, currency: string): Promise<Price[]> {
   return axios
-    .get(`${import.meta.env.VITE_HOTEL_BASE_URL}/${city}/${id}/${currency}`)
+    .get(`${import.meta.env.VITE_HOTEL_BASE_URL}/${city}/1/${currency}`)
     .then((res) => res.data)
     .catch((error) => {
       console.log(error);
