@@ -65,7 +65,7 @@ npm run test:cov
 - [x] Implement competitor pricing functionality
   - [x] competitive pricing listing
   - [x] display savings
-- [ ] Implement taxes & fees functionality
+- [x] Implement taxes & fees functionality
 - [ ] Setup test coverage
 - [ ] Enhance error handling
 - [ ] refactor to uselocalstorage hook

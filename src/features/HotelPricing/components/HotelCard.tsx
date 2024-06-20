@@ -12,6 +12,7 @@ export default function HotelCard({
   price,
   currency,
   competitors,
+  taxes_and_fees: taxesAndFees,
 }: HotelCardProps) {
   const renderCompetitorsPriceList = () => {
     if (!competitors || !price) return null;
@@ -60,6 +61,21 @@ export default function HotelCard({
     );
   };
 
+  const renderTaxInclusive = () => {
+    if (!taxesAndFees) return null;
+    return (
+      <div className="flex flex-col">
+        <span className="text-blue-500 text-sm">Tax Inclusive</span>
+        <span className="text-blue-500 text-sm">
+          Hotel fees - {taxesAndFees.hotel_fees}
+        </span>
+        <span className="text-blue-500 text-sm">
+          City taxes - {taxesAndFees.tax}
+        </span>
+      </div>
+    );
+  };
+
   const calculatePriceRounding = (currency: string, price: number) => {
     if (currency === "USD" || currency === "SGD" || currency === "CNY") {
       return Math.round(price / 10) * 10;
@@ -102,8 +118,8 @@ export default function HotelCard({
           <div className="flex justify-center mt-2">
             <span className="text-gray-500 font-extrabold">{rating} / 10</span>
           </div>
-
           <div>{renderPriceInCurrencyFormat()}</div>
+          <div>{renderTaxInclusive()}</div>
           <div className="flex flex-row justify-between items-baseline">
             <div>{renderCompetitorsPriceList()}</div>
             <div>{renderSavings()}</div>

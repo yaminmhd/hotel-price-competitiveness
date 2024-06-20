@@ -146,4 +146,28 @@ describe("<HotelCard/>", () => {
 
     expect(screen.getByText("Save 4.76%")).toBeInTheDocument();
   });
+
+  it("should not render tax inclusive when taxes and fees is not available", () => {
+    const props: HotelCardProps = { ...baseProps, taxes_and_fees: undefined };
+
+    render(<HotelCard {...props} />);
+
+    expect(screen.queryByText("Tax Inclusive")).not.toBeInTheDocument();
+  });
+
+  it("should render tax inclusive with hotel fees and city taxes", () => {
+    const props: HotelCardProps = {
+      ...baseProps,
+      taxes_and_fees: {
+        hotel_fees: 10,
+        tax: 5,
+      },
+    };
+
+    render(<HotelCard {...props} />);
+
+    expect(screen.getByText("Tax Inclusive")).toBeInTheDocument();
+    expect(screen.getByText("Hotel fees - 10")).toBeInTheDocument();
+    expect(screen.getByText("City taxes - 5")).toBeInTheDocument();
+  });
 });
