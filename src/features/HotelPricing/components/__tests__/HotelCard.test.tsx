@@ -104,4 +104,46 @@ describe("<HotelCard/>", () => {
       "last:line-through"
     );
   });
+
+  it("should not render savings when competitors or price is not available", () => {
+    const props: HotelCardProps = {
+      ...baseProps,
+      competitors: undefined,
+      price: undefined,
+    };
+
+    render(<HotelCard {...props} />);
+
+    expect(screen.queryByText("Save")).not.toBeInTheDocument();
+  });
+
+  it("should not render savings when our price is the same as the most expensive competitor", () => {
+    const props: HotelCardProps = {
+      ...baseProps,
+      competitors: {
+        "Competitor 1": 80,
+        "Competitor 2": 92,
+        "Competitor 3": 100,
+      },
+    };
+
+    render(<HotelCard {...props} />);
+
+    expect(screen.queryByText("Save")).not.toBeInTheDocument();
+  });
+
+  it("should render savings when our price is cheaper than the most expensive competitor", () => {
+    const props: HotelCardProps = {
+      ...baseProps,
+      competitors: {
+        "Competitor 1": 80,
+        "Competitor 2": 92,
+        "Competitor 3": 105,
+      },
+    };
+
+    render(<HotelCard {...props} />);
+
+    expect(screen.getByText("Save 4.76%")).toBeInTheDocument();
+  });
 });

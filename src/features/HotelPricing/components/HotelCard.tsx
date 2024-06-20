@@ -13,7 +13,7 @@ export default function HotelCard({
   currency,
   competitors,
 }: HotelCardProps) {
-  const getCompetitorPriceList = () => {
+  const renderCompetitorsPriceList = () => {
     if (!competitors || !price) return null;
     const allCompetitons = { ...competitors, ["Our Price"]: price };
 
@@ -37,13 +37,26 @@ export default function HotelCard({
     return (
       <div
         data-testid="competitor-price-listing"
-        className="mt-2 flex flex-col items-start"
+        className="flex flex-col items-start"
       >
-        <span className="text-lg text-gray-700 underline">
+        <span className="text-sm text-gray-700 underline">
           Competitive Price Listing
         </span>
         {competitivePriceListing}
       </div>
+    );
+  };
+
+  const renderSavings = () => {
+    if (!competitors || !price) return null;
+    const maxCompetitorPrice = Math.max(...Object.values(competitors));
+    if (maxCompetitorPrice <= price) return null;
+
+    const savings = ((maxCompetitorPrice - price) / maxCompetitorPrice) * 100;
+    return (
+      <span className="text-green-600 font-bold">
+        Save {savings.toFixed(2)}%
+      </span>
     );
   };
 
@@ -89,8 +102,12 @@ export default function HotelCard({
           <div className="flex justify-center mt-2">
             <span className="text-gray-500 font-extrabold">{rating} / 10</span>
           </div>
+
           <div>{renderPriceInCurrencyFormat()}</div>
-          <div>{getCompetitorPriceList()}</div>
+          <div className="flex flex-row justify-between items-baseline">
+            <div>{renderCompetitorsPriceList()}</div>
+            <div>{renderSavings()}</div>
+          </div>
         </div>
       </div>
     </div>
