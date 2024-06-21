@@ -87,7 +87,7 @@ npm run test:cov
 - [x] Setup vitest
 - [x] Setup react query and tailwindcss
 - [x] Render data onto screen
-  - [x] HotelListing
+  - [x] HotelPricingPage
   - [x] HotelCard
 - [x] Create API service
   - [x] define types for data contract

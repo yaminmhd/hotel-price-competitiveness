@@ -1,24 +1,24 @@
 import { fireEvent } from "@testing-library/react";
 import { HttpResponse, http } from "msw";
 import userEvent from "@testing-library/user-event";
-import HotelListing from "../HotelListing";
+import HotelPricingPage from "../HotelPricingPage";
 import { renderWithClient } from "./utils";
 import { server } from "../../../../mocks/server";
 
-describe("<HotelListing/>", () => {
+describe("<HotelPricingPage/>", () => {
   beforeEach(() => {
     window.localStorage.clear();
   });
 
   it("should render hotels list successfully with default USD price info", async () => {
-    const result = renderWithClient(<HotelListing />);
+    const result = renderWithClient(<HotelPricingPage />);
 
     expect(await result.findAllByRole("listitem")).toHaveLength(6);
     expect(await result.findByTestId("currency-selector")).toBeInTheDocument();
   });
 
   it("should render hotel with no price info at the bottom of list", async () => {
-    const result = renderWithClient(<HotelListing />);
+    const result = renderWithClient(<HotelPricingPage />);
 
     const selectElement = await result.findByLabelText("Select Currency:");
 
@@ -34,7 +34,7 @@ describe("<HotelListing/>", () => {
   });
 
   it("should retain price info currency when user selects another currency SGD and refreshes browser", async () => {
-    const result = renderWithClient(<HotelListing />);
+    const result = renderWithClient(<HotelPricingPage />);
     expect(
       await result.findByRole("heading", { name: "Price: USD 840" })
     ).toBeInTheDocument();
@@ -53,7 +53,7 @@ describe("<HotelListing/>", () => {
   });
 
   it("should render loading state", async () => {
-    const result = renderWithClient(<HotelListing />);
+    const result = renderWithClient(<HotelPricingPage />);
     expect(await result.findByText("Loading...")).toBeInTheDocument();
   });
 
@@ -64,7 +64,7 @@ describe("<HotelListing/>", () => {
         return new HttpResponse("error", { status: 500 });
       })
     );
-    const result = renderWithClient(<HotelListing />);
+    const result = renderWithClient(<HotelPricingPage />);
 
     expect(await result.findByText(`Something went wrong`)).toBeInTheDocument();
   });

@@ -5,7 +5,7 @@ import usePriceInfoQuery from "../hooks/usePriceInfoQuery";
 import { LOCAL_STORAGE_KEY } from "../constants";
 import HotelList from "../components/HotelList";
 
-export default function HotelListing() {
+export default function HotelPricingPage() {
   const getInitialCurrency = () => {
     const savedCurrency = localStorage.getItem(LOCAL_STORAGE_KEY);
     return savedCurrency ? savedCurrency : "USD";

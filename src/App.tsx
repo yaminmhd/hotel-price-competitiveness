@@ -1,7 +1,7 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import "./App.css";
 import queryClient from "./queryClient";
-import HotelListing from "./features/HotelPricing/pages/HotelListing";
+import HotelPricingPage from "./features/HotelPricing/pages/HotelPricingPage";
 import { ErrorBoundary } from "react-error-boundary";
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
           <h1 className="text-2xl font-bold">
             Hotel Currencies & Price Competitiveness
           </h1>
-          <HotelListing />
+          <HotelPricingPage />
         </div>
       </QueryClientProvider>
     </ErrorBoundary>
