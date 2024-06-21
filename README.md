@@ -30,7 +30,6 @@ hotel-price-competitiveness/
   │   │   └── components/
   │   │   └── constants/
   │   │   └── hooks/
-  │   │   └── lib/
   │   │   └── pages/
   │   ├── lib/           # Utility functions
   │   ├── mocks/         # MSW server and handler setup
@@ -47,6 +46,16 @@ hotel-price-competitiveness/
   ├── tsconfig.json      # TypeScript configuration
   └── vite.config.ts     # Vite configuration
   └── vite-setup.ts      # Vite test setup
+```
+
+## 🧪 Testing
+
+```
+Testing layers (vitest, react-testing-library)
+- HotelCard -> Unit testing hotel card rendering logic with mock data
+- HotelList -> Unit testing hotel list arrangement with mock data
+- HotelPricingPage -> Integration testing component that utilises local storage and react-query. MSW is used to mock network request
+- Application Level -> E2E test using Cypress (not done)
 ```
 
 ## 🚀 Getting Started
