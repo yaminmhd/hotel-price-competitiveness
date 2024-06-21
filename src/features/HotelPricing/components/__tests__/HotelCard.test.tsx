@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import HotelCard, { HotelCardProps } from "../HotelCard";
 
 describe("<HotelCard/>", () => {
@@ -155,7 +155,7 @@ describe("<HotelCard/>", () => {
     expect(screen.queryByText("Tax Inclusive")).not.toBeInTheDocument();
   });
 
-  it("should render tax inclusive with hotel fees and city taxes", () => {
+  it("should render tax inclusive with hotel fees and city taxes in a popover upon clicking the info icon", () => {
     const props: HotelCardProps = {
       ...baseProps,
       taxes_and_fees: {
@@ -165,6 +165,10 @@ describe("<HotelCard/>", () => {
     };
 
     render(<HotelCard {...props} />);
+    expect(screen.queryByText("Hotel fees - 10")).not.toBeInTheDocument();
+    expect(screen.queryByText("City taxes - 5")).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId("info-icon"));
 
     expect(screen.getByText("Tax Inclusive")).toBeInTheDocument();
     expect(screen.getByText("Hotel fees - 10")).toBeInTheDocument();

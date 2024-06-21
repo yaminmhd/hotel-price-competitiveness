@@ -2,28 +2,68 @@
 
 Task - https://gist.github.com/mal90/4627e6beb44ec038b90f64ea1bb30638
 
-## Tech stack
+## 🎉 Tech stack
 
-- react
-- typescript
-- vite
-- react-query
-- tailwindcss
+- **React** - A JavaScript library for building user interfaces.
+- **Vite** - A fast, opinionated frontend build tool.
+- **TypeScript** - A typed superset of JavaScript that compiles to plain JavaScript.
+- **@tanstack/query** - Async data fetching and state manager
+- **Tailwind CSS** - A utility-first CSS framework.
+- **ESLint** - A pluggable linting utility for TypeScript.
+- **PostCSS** - A tool for transforming CSS with JavaScript.
+- **Autoprefixer** - A PostCSS plugin to parse CSS and add vendor prefixes.
+- **shadcn/ui** - Beautifully designed components that you can copy and paste into your apps.
+- **msw** - Networking request mocking tool
 
-## Installation
+## 📂 Project Structure
+
+The project structure follows a standard React application layout:
+
+```python
+hotel-price-competitiveness/
+  ├── node_modules/      # Project dependencies
+  ├── public/            # Public assets
+  ├── src/               # Application source code
+  │   ├── components/    # React components
+  │   │   └── ui/        # shadcn/ui components
+  │   ├── features/      # features and related subfolders - HotelPricing
+  │   │   └── components/
+  │   │   └── constants/
+  │   │   └── hooks/
+  │   │   └── lib/
+  │   │   └── pages/
+  │   ├── lib/           # Utility functions
+  │   ├── mocks/         # MSW server and handler setup
+  │   ├── App.tsx        # Application entry point
+  │   ├── index.css      # CSS stylesheets
+  │   ├── App.css        # CSS stylesheets
+  │   └── main.tsx       # Main rendering file
+  ├── .env               # Environment file
+  ├── .eslintrc.cjs      # ESLint configuration
+  ├── components.json    # Shadcn component configuration
+  ├── index.html         # HTML entry point
+  ├── postcss.config.js  # PostCSS configuration
+  ├── tailwind.config.js # Tailwind CSS configuration
+  ├── tsconfig.json      # TypeScript configuration
+  └── vite.config.ts     # Vite configuration
+  └── vite-setup.ts      # Vite test setup
+```
+
+## 🚀 Getting Started
+
+### Installation
 
 ```shell
 npm install
 ```
 
-## Running the application
+### Running the application
 
 ```shell
 npm run dev
-
 ```
 
-## Test
+### Test
 
 ```shell
 # unit tests
@@ -36,9 +76,7 @@ npm run test:watch
 npm run test:cov
 ```
 
----
-
-## Dev Task List
+## 📜 Dev Task List
 
 - [x] Setup initial repo
   - [x] update readme documentation
@@ -70,36 +108,3 @@ npm run test:cov
 - [ ] Enhance error handling
 - [ ] refactor to uselocalstorage hook
 - [ ] refactor enum for currency
-
----
-
-# Default documentation from Vite setup
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
-    tsconfigRootDir: __dirname,
-  },
-};
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list

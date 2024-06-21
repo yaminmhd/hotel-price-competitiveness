@@ -1,4 +1,10 @@
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Hotel, Price } from "../../../api";
+import { IoIosInformationCircleOutline } from "react-icons/io";
 
 export type HotelCardProps = Omit<Price, "id"> &
   Omit<Hotel, "id"> & { currency: string };
@@ -64,14 +70,21 @@ export default function HotelCard({
   const renderTaxInclusive = () => {
     if (!taxesAndFees) return null;
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-row justify-center">
         <span className="text-blue-500 text-sm">Tax Inclusive</span>
-        <span className="text-blue-500 text-sm">
-          Hotel fees - {taxesAndFees.hotel_fees}
-        </span>
-        <span className="text-blue-500 text-sm">
-          City taxes - {taxesAndFees.tax}
-        </span>
+        <Popover>
+          <PopoverTrigger>
+            <IoIosInformationCircleOutline data-testid="info-icon" />
+          </PopoverTrigger>
+          <PopoverContent className="flex flex-col">
+            <span className="text-blue-500 text-sm">
+              Hotel fees - {taxesAndFees.hotel_fees}
+            </span>
+            <span className="text-blue-500 text-sm">
+              City taxes - {taxesAndFees.tax}
+            </span>
+          </PopoverContent>
+        </Popover>
       </div>
     );
   };
