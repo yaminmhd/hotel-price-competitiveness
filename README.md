@@ -99,7 +99,7 @@ npm run test:cov
 - [x] Implement currency switching functionality
   - [x] add localstorage for currency refresh
   - [x] round off currencies for display
-  - [ ] push "Rates unavailable" result to bottom of list
+  - [x] push "Rates unavailable" result to bottom of list
 - [x] Implement competitor pricing functionality
   - [x] competitive pricing listing
   - [x] display savings
@@ -108,4 +108,3 @@ npm run test:cov
 - [ ] Setup test coverage
 - [ ] refactor to uselocalstorage hook
 - [ ] refactor enum for currency
-- [ ] move queries into a single query

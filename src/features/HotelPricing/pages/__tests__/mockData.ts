@@ -178,3 +178,60 @@ export const mockPriceListDataSGD: Price[] = [
     },
   },
 ];
+
+//mock data setup for CNY currency has no price details for hotel id 2
+//purpose is to test pushing of hotel with no price details to the bottom of the list
+export const mockPriceListDataCNY: Price[] = [
+  {
+    id: 1,
+    price: 825.94,
+    competitors: {
+      "Booking.com": 815,
+      "Hotels.com": 817,
+      Expedia: 814,
+      getaroom: 830,
+      "AMOMA.com": 900,
+    },
+  },
+  {
+    id: 3,
+    price: 4921.2,
+    competitors: {
+      Expedia: 4900.1,
+      Prestigia: 4000.5,
+    },
+  },
+  {
+    id: 4,
+    price: 1066.83,
+    competitors: {
+      JinJiang: 900.9,
+      "Shangri-la": 990.9,
+      "Rosewood Group": 1000,
+    },
+  },
+  {
+    id: 5,
+    price: 832.82,
+    competitors: {
+      Prestigia: 830,
+      Kayak: 945.5,
+    },
+  },
+  {
+    id: 6,
+    price: 653.87,
+    competitors: {
+      Prestigia: 800,
+      "Booking.com": 700,
+    },
+  },
+  {
+    id: 7,
+    price: 846.58,
+  },
+  {
+    id: 8,
+    price: 846.58,
+  },
+];

@@ -2,6 +2,7 @@ import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import {
   mockHotelListData,
+  mockPriceListDataCNY,
   mockPriceListDataSGD,
   mockPriceListDataUSD,
 } from "../features/HotelPricing/pages/__tests__/mockData";
@@ -16,6 +17,9 @@ const handlers = [
   }),
   http.get(`${import.meta.env.VITE_HOTEL_BASE_URL}${CITY}/1/SGD`, () => {
     return HttpResponse.json(mockPriceListDataSGD);
+  }),
+  http.get(`${import.meta.env.VITE_HOTEL_BASE_URL}${CITY}/1/CNY`, () => {
+    return HttpResponse.json(mockPriceListDataCNY);
   }),
 ];
 

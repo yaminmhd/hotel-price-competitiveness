@@ -22,9 +22,11 @@ export function renderWithClient(ui: React.ReactElement) {
     ...result,
     rerender: (rerenderUi: React.ReactElement) =>
       rerender(
-        <QueryClientProvider client={testQueryClient}>
-          {rerenderUi}
-        </QueryClientProvider>
+        <ErrorBoundary fallback={<div>Something went wrong</div>}>
+          <QueryClientProvider client={testQueryClient}>
+            {rerenderUi}
+          </QueryClientProvider>
+        </ErrorBoundary>
       ),
   };
 }

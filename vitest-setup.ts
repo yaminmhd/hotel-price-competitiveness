@@ -15,9 +15,5 @@ afterAll(() => {
 
 afterEach(() => {
   server.resetHandlers();
-});
-
-// runs a clean after each test case (e.g. clearing jsdom)
-afterEach(() => {
   cleanup();
 });
