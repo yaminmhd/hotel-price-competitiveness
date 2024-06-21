@@ -1,4 +1,8 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+
+const errorHandler = (error: AxiosError) => {
+  return Promise.reject(error.response?.data || error.message);
+};
 
 export type Hotel = {
   id: number;
@@ -15,7 +19,7 @@ export function fetchHotels(city: string): Promise<Hotel[]> {
     .get(`${import.meta.env.VITE_HOTEL_BASE_URL}${city}`)
     .then((res) => res.data)
     .catch((error) => {
-      console.log(error);
+      return errorHandler(error);
     });
 }
 
@@ -36,6 +40,6 @@ export function fetchPrices(city: string, currency: string): Promise<Price[]> {
     .get(`${import.meta.env.VITE_HOTEL_BASE_URL}${city}/1/${currency}`)
     .then((res) => res.data)
     .catch((error) => {
-      console.log(error);
+      return errorHandler(error);
     });
 }

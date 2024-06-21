@@ -46,19 +46,14 @@ describe("<HotelListing/>", () => {
     expect(await result.findByText("Loading...")).toBeInTheDocument();
   });
 
-  it("should render error state", async () => {
+  it("should render generic fallback error state page", async () => {
     server.use(
       http.get("*", () => {
-        return new HttpResponse("Something went wrong", { status: 500 });
+        return new HttpResponse("error", { status: 500 });
       })
     );
     const result = renderWithClient(<HotelListing />);
 
-    expect(
-      await result.findByText(`["hotels"] data is undefined`)
-    ).toBeInTheDocument();
-    expect(
-      await result.findByText(`["prices","SGD"] data is undefined`)
-    ).toBeInTheDocument();
+    expect(await result.findByText(`Something went wrong`)).toBeInTheDocument();
   });
 });

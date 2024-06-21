@@ -104,7 +104,8 @@ npm run test:cov
   - [x] competitive pricing listing
   - [x] display savings
 - [x] Implement taxes & fees functionality
+- [x] Enhance error handling
 - [ ] Setup test coverage
-- [ ] Enhance error handling
 - [ ] refactor to uselocalstorage hook
 - [ ] refactor enum for currency
+- [ ] move queries into a single query

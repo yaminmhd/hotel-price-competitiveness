@@ -12,19 +12,10 @@ export default function HotelListing() {
   };
   const [currency, setCurrency] = useState<string>(getInitialCurrency());
 
-  const {
-    data: hotelsData,
-    isPending: hotelsIsPending,
-    isError: hotelsIsError,
-    error: hotelsError,
-  } = useHotelQuery();
+  const { data: hotelsData, isPending: hotelsIsPending } = useHotelQuery();
 
-  const {
-    data: pricesData,
-    isPending: pricesIsPending,
-    isError: pricesIsError,
-    error: pricesError,
-  } = usePriceInfoQuery(currency);
+  const { data: pricesData, isPending: pricesIsPending } =
+    usePriceInfoQuery(currency);
 
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, currency);
@@ -37,21 +28,8 @@ export default function HotelListing() {
   if (hotelsIsPending || pricesIsPending)
     return <h2 className="text-2xl font-bold">Loading...</h2>;
 
-  if (hotelsIsError || pricesIsError)
-    return (
-      <>
-        {hotelsError && (
-          <h2 className="text-2xl font-bold">{hotelsError?.message}</h2>
-        )}
-
-        {pricesError && (
-          <h2 className="text-2xl font-bold">{pricesError?.message}</h2>
-        )}
-      </>
-    );
-
-  const hotelDataWithPrices = hotelsData.map((hotel) => {
-    const priceInfo = pricesData.find((price) => price.id === hotel.id);
+  const hotelDataWithPrices = hotelsData?.map((hotel) => {
+    const priceInfo = pricesData?.find((price) => price.id === hotel.id);
     return {
       ...hotel,
       price: priceInfo?.price,
@@ -61,7 +39,7 @@ export default function HotelListing() {
   });
 
   const renderHotelCards = () => {
-    return hotelDataWithPrices.map(({ id, ...rest }) => (
+    return hotelDataWithPrices?.map(({ id, ...rest }) => (
       <HotelCard key={id} {...rest} currency={currency} />
     ));
   };

@@ -6,6 +6,7 @@ export default function usePriceInfoQuery(currency: string) {
   return useQuery<Price[]>({
     queryKey: ["prices", currency],
     queryFn: () => fetchPrices(CITY, currency),
+    throwOnError: true,
     enabled: !!currency,
   });
 }
